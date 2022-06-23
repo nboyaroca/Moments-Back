@@ -1,8 +1,18 @@
 package com.factoria.moments.models;
 
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.*;
 import java.util.Locale;
+
+@Data
+@Entity
+@Table (name = "moments")
+@NoArgsConstructor
+
 
 public class Moment {
 
@@ -10,6 +20,8 @@ public class Moment {
     private String title = "default title";
     private String description = "default description";
     private String imgUrl = "default image.jpg";
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
 
@@ -22,24 +34,6 @@ public class Moment {
         this.description = description.toLowerCase();
         this.imgUrl = imgUrl;
         this.id = id;
-    }
-
-    // GETTERS (retornen objectes)
-
-    public String getTitle() {
-        return title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public Long getId() {
-        return id;
     }
 
 
