@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+//Controla l'entrada http i la sortida http
+
 @RestController
 @CrossOrigin(origins="http://localhost:3000/")
 
@@ -45,6 +47,13 @@ public class MomentsController {
         moment.setImgUrl(updatedMoment.getImgUrl());
         var dbMoment = momentRepository.save(moment);
         return dbMoment;
+    }
+
+    @DeleteMapping("/moments/{id}")
+    Boolean deleteMoment(@PathVariable Long id) { //això és lo que torna
+        Moment moment = this.momentRepository.findById(id).get();
+        this.momentRepository.delete(moment);
+        return true;
     }
 
     /*@GetMapping(value = "/moments", params = "search")
