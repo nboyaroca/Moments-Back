@@ -9,6 +9,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins="http://localhost:3000/")
+
 public class MomentsController {
 
     private IMomentRepository momentRepository;
@@ -37,15 +39,11 @@ public class MomentsController {
 
     @PutMapping("/moments/{id}")
     Moment updateMoment(@PathVariable Long id, @RequestBody Moment updatedMoment) {
-        var moment = momentRepository.findById(id).get();
+        var moment = momentRepository.findById(id).get(); //.get diu que vol el resultat encara que estigui buit
         moment.setTitle(updatedMoment.getTitle());
         moment.setDescription(updatedMoment.getDescription());
         moment.setImgUrl(updatedMoment.getImgUrl());
         var dbMoment = momentRepository.save(moment);
-
-
-
-    //.get diu que vol el resultat encara que estigui buit
         return dbMoment;
     }
 

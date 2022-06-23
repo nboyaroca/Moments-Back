@@ -1,6 +1,7 @@
 package com.factoria.moments.models;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -12,6 +13,7 @@ import java.util.Locale;
 @Entity
 @Table (name = "moments")
 @NoArgsConstructor
+
 
 
 public class Moment {
