@@ -21,18 +21,21 @@ public class MomentsController {
         this.momentRepository = momentRepository;
     }
 
+    // Get all moments
     @GetMapping("/moments")
     List<Moment> getAllMoments() {
         var momentList = this.momentRepository.findAll();
         return momentList;
     }
 
+    // Get a moment by id
     @GetMapping("/moments/{id}")
     Moment getById(@PathVariable Long id) {
         Moment moment = this.momentRepository.findById(id).get();
         return moment;
     }
 
+    // Create a new moment
     @PostMapping("/moments")
     Moment createMoment(@RequestBody Moment newMoment) {
         var moment = momentRepository.save(newMoment);
@@ -49,8 +52,9 @@ public class MomentsController {
         return dbMoment;
     }
 
+    // Delete a moment
     @DeleteMapping("/moments/{id}")
-    Boolean deleteMoment(@PathVariable Long id) { //això és lo que torna
+    Boolean deleteMoment(@PathVariable Long id) { //això és el que retorna
         Moment moment = this.momentRepository.findById(id).get();
         this.momentRepository.delete(moment);
         return true;

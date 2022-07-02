@@ -16,6 +16,5 @@ public interface IMomentRepository extends JpaRepository <Moment, Long> {
     @Override
     void deleteById(Long id);
 
-
     // ho podem mutejar perquè ja està implementat pel JPA
 }

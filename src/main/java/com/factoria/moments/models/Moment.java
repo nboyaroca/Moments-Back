@@ -1,13 +1,13 @@
 package com.factoria.moments.models;
 
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.*;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -26,8 +26,13 @@ public class Moment {
    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "moment")
+    private List<Comment> comments = new ArrayList<>();
 
-
+    @JsonSerialize
+    public int commentCount() {
+        return this.comments.size();
+    }
 
     // CONSTRUCTORS
 
