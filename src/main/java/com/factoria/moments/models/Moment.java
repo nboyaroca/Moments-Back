@@ -34,8 +34,8 @@ public class Moment {
         return this.comments.size();
     }
 
-    // CONSTRUCTORS
 
+    // CONSTRUCTORS
     public Moment(String title, String description, String imgUrl, Long id) {
         this.title = title.toLowerCase();
         this.description = description.toLowerCase();

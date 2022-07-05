@@ -10,11 +10,11 @@ import java.util.Optional;
 public interface IMomentRepository extends JpaRepository <Moment, Long> {
 
 //    List<Moment> findAll();
+// ho podem mutejar perquè ja està implementat pel JPA
 
     Optional<Moment> findById(Long id);
 
     @Override
     void deleteById(Long id);
 
-    // ho podem mutejar perquè ja està implementat pel JPA
 }

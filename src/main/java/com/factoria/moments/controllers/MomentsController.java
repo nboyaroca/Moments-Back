@@ -60,14 +60,14 @@ public class MomentsController {
         return true;
     }
 
-    /*@GetMapping(value = "/moments", params = "search")
+    @GetMapping(value = "/moments", params = "search")
     List<Moment> getMomentSearch(@RequestParam String search) { // definim la funció getMomentSearch amb l'endpoint moments?search={search} eg. moments?search=puppy
         var moments = momentRepository.findAll();
         var momentSearch = moments.stream()
                 .filter(item -> item.getTitle().contains(search) || item.getDescription().contains(search))
                 .collect(Collectors.toList()); //volem trobar l'item en funció del search introduit
         return momentSearch;
-    }*/
+    }
 
 // CAPA DAO (data access object) Single Responasbility: separació d'infrastructura. Qui busca a les bases de dades ha d'estar separat de la lògica de negoci.
     // Capa que es dedica a la cerca de dades que es diu repositoris (package) i javaclass FakeCoderRepository on hi haurà tot el que té relació amb les consultes de dades
