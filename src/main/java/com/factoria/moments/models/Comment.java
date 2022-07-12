@@ -10,12 +10,15 @@ import javax.persistence.*;
 @Table(name= "comments")
 
 public class Comment {
+
+   // ATRIBUTS
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
     private String comment;
 
+    // RELACIONS
     @ManyToOne
     @JoinColumn(name = "moment_id")
     @JsonIgnore

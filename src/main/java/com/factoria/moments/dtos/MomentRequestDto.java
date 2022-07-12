@@ -5,7 +5,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class CommentRequestDto {
-    private String comment;
-    private Long momentId;
+public class MomentRequestDto {
+    private String title;
+    private String description;
+    private String imgUrl;
 }

@@ -1,12 +1,13 @@
 package com.factoria.moments.controllers;
 
+import com.factoria.moments.dtos.MomentRequestDto;
 import com.factoria.moments.models.Moment;
-import com.factoria.moments.repositories.IMomentRepository;
+import com.factoria.moments.models.User;
+import com.factoria.moments.services.momentS.IMomentService;
+import com.factoria.moments.services.userS.IUserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 //Controla l'entrada http i la sortida http
 
@@ -15,54 +16,57 @@ import java.util.stream.Collectors;
 
 public class MomentsController {
 
-    private IMomentRepository momentRepository;
+    private IMomentService momentService;
+    private IUserService userService;
 
-    public MomentsController(IMomentRepository momentRepository) {
-        this.momentRepository = momentRepository;
+    public MomentsController(IMomentService momentService, IUserService userService) {
+        this.momentService = momentService;
+        this.userService = userService;
     }
 
-    // Get all moments
+    // Get all moments endpoint
     @GetMapping("/moments")
     List<Moment> getAllMoments() {
-        var momentList = this.momentRepository.findAll();
+        var momentList = this.momentService.getAll();
         return momentList;
     }
+
 
     // Get a moment by id
     @GetMapping("/moments/{id}")
     Moment getById(@PathVariable Long id) {
-        Moment moment = this.momentRepository.findById(id).get();
+        Moment moment = this.momentService.findById(id);
         return moment;
     }
 
     // Create a new moment
     @PostMapping("/moments")
-    Moment createMoment(@RequestBody Moment newMoment) {
-        var moment = momentRepository.save(newMoment);
-        return moment;
+    Moment createMoment(@RequestBody MomentRequestDto momentRequest) {
+        var authUser = getAuthUser();
+        return momentService.createMoment(momentRequest, authUser);
     }
+
+    private User getAuthUser() {
+        return userService.getById(1L);
+    }
+
 
     @PutMapping("/moments/{id}")
     Moment updateMoment(@PathVariable Long id, @RequestBody Moment updatedMoment) {
-        var moment = momentRepository.findById(id).get(); //.get diu que vol el resultat encara que estigui buit
-        moment.setTitle(updatedMoment.getTitle());
-        moment.setDescription(updatedMoment.getDescription());
-        moment.setImgUrl(updatedMoment.getImgUrl());
-        var dbMoment = momentRepository.save(moment);
-        return dbMoment;
+        var authUser = getAuthUser();
+        return momentService.updateMoment(id, updatedMoment, authUser);
     }
 
     // Delete a moment
     @DeleteMapping("/moments/{id}")
     Boolean deleteMoment(@PathVariable Long id) { //això és el que retorna
-        Moment moment = this.momentRepository.findById(id).get();
-        this.momentRepository.delete(moment);
+        this.momentService.deleteById(id);
         return true;
     }
 
     @GetMapping(value = "/moments", params = "search")
     List<Moment> getMomentSearch(@RequestParam String search) {
-        var searched = momentRepository.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search, search);
+        var searched = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search, search);
         return searched;
     }
 
@@ -74,6 +78,8 @@ public class MomentsController {
                 .collect(Collectors.toList()); //volem trobar l'item en funció del search introduit
         return momentSearch;
     }*/
+
+
 
 // CAPA DAO (data access object) Single Responasbility: separació d'infrastructura. Qui busca a les bases de dades ha d'estar separat de la lògica de negoci.
     // Capa que es dedica a la cerca de dades que es diu repositoris (package) i javaclass FakeCoderRepository on hi haurà tot el que té relació amb les consultes de dades

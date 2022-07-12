@@ -39,7 +39,7 @@ INTO
   moments
   (title, description, img_url)
 VALUES
-  ('París', 'France capital', 'https://www.kevinandamanda.com/wp-content/uploads/2015/11/best-neighborhoods-to-explore-paris-france-walking-tours-01-480x720.jpg');
+  ('Paris', 'France capital', 'https://www.kevinandamanda.com/wp-content/uploads/2015/11/best-neighborhoods-to-explore-paris-france-walking-tours-01-480x720.jpg');
 INSERT
 INTO
   moments
