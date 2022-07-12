@@ -31,7 +31,6 @@ public class MomentsController {
         return momentList;
     }
 
-
     // Get a moment by id
     @GetMapping("/moments/{id}")
     Moment getById(@PathVariable Long id) {
@@ -42,18 +41,13 @@ public class MomentsController {
     // Create a new moment
     @PostMapping("/moments")
     Moment createMoment(@RequestBody MomentRequestDto momentRequest) {
-        var authUser = getAuthUser();
+        var authUser = userService.getById(momentRequest.getUserId());
         return momentService.createMoment(momentRequest, authUser);
     }
 
-    private User getAuthUser() {
-        return userService.getById(1L);
-    }
-
-
     @PutMapping("/moments/{id}")
-    Moment updateMoment(@PathVariable Long id, @RequestBody Moment updatedMoment) {
-        var authUser = getAuthUser();
+    Moment updateMoment(@PathVariable Long id, @RequestBody MomentRequestDto updatedMoment) {
+        var authUser = userService.getById(updatedMoment.getUserId());
         return momentService.updateMoment(id, updatedMoment, authUser);
     }
 
@@ -66,7 +60,7 @@ public class MomentsController {
 
     @GetMapping(value = "/moments", params = "search")
     List<Moment> getMomentSearch(@RequestParam String search) {
-        var searched = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search, search);
+        var searched = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search);
         return searched;
     }
 

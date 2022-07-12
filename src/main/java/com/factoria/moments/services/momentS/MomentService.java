@@ -17,9 +17,9 @@ public class MomentService implements IMomentService{
         this.momentRepository = momentRepository;
     }
     @Override
-    public List<Moment> getAll() {
-        return momentRepository.findAll();
-    }
+    public List<Moment> getAll() {  // get és el nom que li dono jo
+        return momentRepository.findAll(); //find és del repo
+    } // la funció getAll() ens torna el findAll() del repository
 
     @Override
     public Moment createMoment(MomentRequestDto momentDto, User authUser){
@@ -31,15 +31,15 @@ public class MomentService implements IMomentService{
         return momentRepository.save(moment);
     }
 
+
     @Override
-    public Moment updateMoment(Long id, Moment updatedMoment, User authUser) {
+    public Moment updateMoment(Long id, MomentRequestDto updatedMoment, User authUser) {
         var moment = momentRepository.findById(id).get();
         moment.setTitle(updatedMoment.getTitle());
         moment.setDescription(updatedMoment.getDescription());
         moment.setImgUrl(updatedMoment.getImgUrl());
         moment.setPublisher(authUser);
-        var dbMoment = momentRepository.save(moment);
-        return dbMoment;
+        return momentRepository.save(moment);
     }
 
 
@@ -56,8 +56,8 @@ public class MomentService implements IMomentService{
     }
 
     @Override
-    public List<Moment> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String title, String description) {
-        return momentRepository.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(title, description);
+    public List<Moment> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search) {
+        return momentRepository.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search);
     }
 
 

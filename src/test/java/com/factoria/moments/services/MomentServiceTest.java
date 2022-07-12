@@ -38,7 +38,7 @@ class MomentServiceTest {
     void createSavesAMomentMappedFromDTO() {
         var momentService = new MomentService(momentRepository);
 
-        var momentRequest = new MomentRequestDto("London", "UK Capital", "london.jpg");
+        var momentRequest = new MomentRequestDto("London", "UK Capital", "london.jpg", 1L);
         var publisher = new User();
         publisher.setId(1L);
 

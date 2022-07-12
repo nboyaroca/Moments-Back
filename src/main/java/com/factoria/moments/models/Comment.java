@@ -23,4 +23,8 @@ public class Comment {
     @JoinColumn(name = "moment_id")
     @JsonIgnore
     private Moment moment;
+
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private User publisher;
 }
