@@ -5,6 +5,7 @@ import com.factoria.moments.services.commentS.ICommentService;
 import com.factoria.moments.services.momentS.IMomentService;
 import com.factoria.moments.services.userS.IUserService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -29,6 +30,11 @@ public class CommentController {
     @GetMapping("/comments")
     List<Comment> getAll() {
         return this.commentService.findAll();
+    }
+
+    @GetMapping("/comments/{id}")
+    Comment getById(@PathVariable Long id) {
+        return this.commentService.getById(id);
     }
 
     // l'sprint NO demana crear un comentari

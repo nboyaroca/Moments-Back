@@ -7,9 +7,15 @@ import java.util.List;
 public interface ICommentService {
     List<Comment> findAll();
 
+
+    Comment getById(Long id);
+
     Comment save(Comment newComment);
 
-  // l'sprint NO demana crear un comentari
+
+
+
+    // l'sprint NO demana crear un comentari
   /* Comment createComment(CommentRequestDto commentDto, Moment momentDto);*/
 
 }

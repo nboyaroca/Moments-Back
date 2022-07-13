@@ -21,6 +21,12 @@ public class CommentService implements ICommentService{
     }
 
     @Override
+    public Comment getById(Long id) {
+        return commentRepository.findById(id).get();
+    }
+
+
+    @Override
     public Comment save(Comment newComment) {
         return commentRepository.save(newComment);
     }

@@ -44,6 +44,7 @@ public class Moment {
         this.description = description.toLowerCase();
         this.imgUrl = imgUrl;
         this.id = id;
+        this.publisher = new User();
     }
 
     public void addComment(Comment comment) {
