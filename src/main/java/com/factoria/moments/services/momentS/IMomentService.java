@@ -19,7 +19,7 @@ public interface IMomentService {
 
     Moment findById(Long id);
 
-    void deleteById(Long id);
+    boolean deleteById(Long id);
 
     List<Moment> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search);
 }

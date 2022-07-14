@@ -1,16 +1,19 @@
 package com.factoria.moments.controllers;
 
+import com.factoria.moments.dtos.CommentRequestDto;
+import com.factoria.moments.dtos.MomentRequestDto;
 import com.factoria.moments.models.Comment;
+import com.factoria.moments.models.User;
 import com.factoria.moments.services.commentS.ICommentService;
 import com.factoria.moments.services.momentS.IMomentService;
 import com.factoria.moments.services.userS.IUserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins="http://localhost:3000/")
+
 public class CommentController {
 
     // ATRIBUTS
@@ -37,14 +40,22 @@ public class CommentController {
         return this.commentService.getById(id);
     }
 
-    // l'sprint NO demana crear un comentari
-    /* @PostMapping("/comments")
-    Comment createComment(@RequestBody CommentRequestDto commentDto) {
-        return commentService.createComment(commentDto);
-    }*/
+    @GetMapping("/moments/{id}/comments")
+    List<Comment> getMomentComments(@PathVariable Long id) {
+        return commentService.findAllByMomentId(id);
+    }
 
-    /* private User getAuthUser() {
-        return userService.getById(1L);
-    }*/
+
+    // l'sprint NO demana crear un comentari
+
+    @PostMapping("/comments")
+    Comment createComment(@RequestBody CommentRequestDto commentDto) {
+        User authUser = getAuthUser(commentDto.getUserId());
+        return commentService.createComment(commentDto, authUser);
+    }
+
+     private User getAuthUser(Long id) {
+        return userService.getById(id);
+    }
 
 }

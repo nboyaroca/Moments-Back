@@ -47,6 +47,8 @@ public class Moment {
         this.publisher = new User();
     }
 
+
+    // COMMENTS IN A MOMENT POT ESTAR TAMBÉ EN UN RESPONES DTO O CRIDAR-LO PER DTO PER SERIALITZAR-LO
     public void addComment(Comment comment) {
         this.commentsList.add(comment);
     }

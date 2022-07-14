@@ -38,13 +38,14 @@ public class MomentsController {
         return moment;
     }
 
-    // Create a new moment
+    // Add a new moment
     @PostMapping("/moments")
     Moment createMoment(@RequestBody MomentRequestDto momentRequest) {
         var authUser = userService.getById(momentRequest.getUserId());
         return momentService.createMoment(momentRequest, authUser);
     }
 
+    // Edit a moment
     @PutMapping("/moments/{id}")
     Moment updateMoment(@PathVariable Long id, @RequestBody MomentRequestDto updatedMoment) {
         var authUser = userService.getById(updatedMoment.getUserId());
@@ -53,9 +54,8 @@ public class MomentsController {
 
     // Delete a moment
     @DeleteMapping("/moments/{id}")
-    Boolean deleteMoment(@PathVariable Long id) { //això és el que retorna
-        this.momentService.deleteById(id);
-        return true;
+        boolean deleteMoment(@PathVariable Long id) { //això és el que retorna
+        return this.momentService.deleteById(id);
     }
 
     @GetMapping(value = "/moments", params = "search")

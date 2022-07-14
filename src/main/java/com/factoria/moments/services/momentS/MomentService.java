@@ -50,9 +50,10 @@ public class MomentService implements IMomentService{
     }
 
     @Override
-    public void deleteById(Long id) {
-
-
+    public boolean deleteById(Long id) {
+        var moment= momentRepository.findById(id).get();
+        this.momentRepository.delete(moment);
+        return true;
     }
 
     @Override
