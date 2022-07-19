@@ -106,6 +106,18 @@ class MomentServiceTest {
     }
 
     @Test
-    void findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase() {
+    void findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCaseShouldReturnSearchedMoments() {
+        var momentService = new MomentService(momentRepository);
+        var moment = this.createMoment();
+        var momentList= List.of(moment, moment);
+
+        Mockito.when(momentRepository.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(any(String.class))).thenReturn(momentList);
+
+        var sut = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase("search");
+
+        assertThat(sut.size(), equalTo(2));
+        /*assertThat(sut.size(), equalTo(3)); FAILED TEST */
+
     }
+
 }
