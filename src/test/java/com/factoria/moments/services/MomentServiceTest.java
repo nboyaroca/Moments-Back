@@ -35,6 +35,21 @@ class MomentServiceTest {
         assertThat(sut.size(), equalTo(2));
     }
 
+    // FUNCIÓ PER CREAR UN MOMENT PER ÚS DELS TESTS
+    private Moment createMoment() {
+        var publisher = new User();
+        publisher.setId(1L);
+
+        var moment = new Moment(); //instanciem la classe Moment (variables en minúscula i classes en majúscula)
+        moment.setTitle("title");
+        moment.setDescription("description");
+        moment.setImgUrl("image");
+        moment.setId(1L);
+        moment.setPublisher(publisher);
+
+        return moment;
+    }
+
     @Test
     void findByIdShouldReturnAMomentWithSameParamId() {
         var momentService = new MomentService(momentRepository);
@@ -48,27 +63,11 @@ class MomentServiceTest {
         /*assertThat(sut.getTitle(), equalTo("HelloWorld"); TEST FAIL */
     }
 
-    private Moment createMoment() {
-        var publisher = new User();
-        publisher.setId(1L);
-
-        var moment = new Moment(); //instanciem la classe Moment
-        moment.setTitle("title");
-        moment.setDescription("description");
-        moment.setImgUrl("image");
-        moment.setId(1L);
-        moment.setPublisher(publisher);
-
-        return moment;
-    }
-
 
     @Test
-    void createSavesAMomentFromRequestDTO() {
+    void createShouldSaveAMomentFromRequestDTO() {
         var momentService = new MomentService(momentRepository);
-
         var momentRequest = new MomentRequestDto("title", "description", "image", 1L);
-
         var moment = this.createMoment();
 
         Mockito.when(momentRepository.save(any(Moment.class))).thenReturn(moment);
@@ -79,8 +78,17 @@ class MomentServiceTest {
     }
 
     @Test
-    void updateMomentModifiesAMomentFromRequestDTO() {
+    void updateMomentShouldModifyAMomentFromRequestDTO() { // mirar sempre el momentService per fer el que necessitem
         var momentService = new MomentService(momentRepository);
+        var momentRequest = new MomentRequestDto("title", "description", "image", 1L);
+        var moment = this.createMoment();
+
+        Mockito.when(momentRepository.findById(any(Long.class))).thenReturn(Optional.of(moment));
+        Mockito.when(momentRepository.save(any(Moment.class))).thenReturn(moment);
+
+        var sut = momentService.updateMoment(1L, momentRequest, moment.getPublisher()); // sut és el nom del test abans del should
+
+        assertThat(sut.getTitle(), equalTo(momentRequest.getTitle()));
     }
 
 
