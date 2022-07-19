@@ -13,11 +13,11 @@ public interface IMomentService {
 
     List<Moment> getAll();
 
+    Moment findById(Long id);
+
     Moment createMoment(MomentRequestDto momentDto, User authUser);
 
     Moment updateMoment(Long id, MomentRequestDto updatedMoment, User authUser);
-
-    Moment findById(Long id);
 
     boolean deleteById(Long id);
 

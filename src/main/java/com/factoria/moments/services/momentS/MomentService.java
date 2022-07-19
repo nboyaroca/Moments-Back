@@ -22,6 +22,12 @@ public class MomentService implements IMomentService{
     } // la funció getAll() ens torna el findAll() del repository
 
     @Override
+    public Moment findById(Long id) {
+        var moment = this.momentRepository.findById(id).get();
+        return moment;
+    }
+
+    @Override
     public Moment createMoment(MomentRequestDto momentDto, User authUser){
         var moment = new Moment();
         moment.setTitle(momentDto.getTitle());
@@ -43,11 +49,7 @@ public class MomentService implements IMomentService{
     }
 
 
-    @Override
-    public Moment findById(Long id) {
-        var moment = this.momentRepository.findById(id).get();
-        return moment;
-    }
+
 
     @Override
     public boolean deleteById(Long id) {
