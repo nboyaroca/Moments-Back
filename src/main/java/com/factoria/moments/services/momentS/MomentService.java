@@ -1,6 +1,7 @@
 package com.factoria.moments.services.momentS;
 
 import com.factoria.moments.dtos.MomentRequestDto;
+import com.factoria.moments.exceptions.NotFoundException;
 import com.factoria.moments.models.Moment;
 import com.factoria.moments.models.User;
 import com.factoria.moments.repositories.IMomentRepository;
@@ -17,14 +18,24 @@ public class MomentService implements IMomentService{
         this.momentRepository = momentRepository;
     }
     @Override
-    public List<Moment> getAll() {  // get és el nom que li dono jo
+    public List<Moment> getAll() {  // get és el nom que jo li dono
         return momentRepository.findAll(); //find és del repo
     } // la funció getAll() ens torna el findAll() del repository
 
-    @Override
+    // Servei findById SENSE control d'errors
+    /*@Override
     public Moment findById(Long id) {
         var moment = this.momentRepository.findById(id).get();
         return moment;
+    }*/
+
+    // Servei findById AMB control d'errors
+    @Override
+    public Moment findById(Long id) {
+        var opMoment = momentRepository.findById(id);
+        if (opMoment.isEmpty()) throw new NotFoundException("Moment Not Found", "P-150");
+
+        return opMoment.get();
     }
 
     @Override

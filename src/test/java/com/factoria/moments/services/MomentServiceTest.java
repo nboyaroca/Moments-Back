@@ -63,7 +63,6 @@ class MomentServiceTest {
         /*assertThat(sut.getTitle(), equalTo("HelloWorld"); TEST FAIL */
     }
 
-
     @Test
     void createShouldSaveAMomentFromRequestDTO() {
         var momentService = new MomentService(momentRepository);
@@ -89,8 +88,8 @@ class MomentServiceTest {
         var sut = momentService.updateMoment(1L, momentRequest, moment.getPublisher()); // sut és el nom del test abans del should
 
         assertThat(sut.getTitle(), equalTo(momentRequest.getTitle()));
+        /*assertThat(sut.getTitle(), equalTo("HelloWorld")); FAILED TEST */
     }
-
 
     @Test
     void deleteByIdShouldDeleteAMomentById() {
@@ -117,7 +116,6 @@ class MomentServiceTest {
 
         assertThat(sut.size(), equalTo(2));
         /*assertThat(sut.size(), equalTo(3)); FAILED TEST */
-
     }
 
 }
