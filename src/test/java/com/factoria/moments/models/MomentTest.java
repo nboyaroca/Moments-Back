@@ -22,4 +22,18 @@ class MomentTest {
         assertThat(sut, equalTo(1));
     }
 
+    @Test
+    void shouldHaveALikesCounter() {
+        var moment = new Moment();
+        var user = new User();
+        moment.setId(1L);
+        user.setId(1L);
+        var like = new Like(user, moment);
+        moment.addLike(like);
+
+        int sut = moment.likesCount();
+
+        assertThat(sut, equalTo(1));
+        /*assertThat(sut, equalTo(2)); FAIL TEST */
+    }
 }

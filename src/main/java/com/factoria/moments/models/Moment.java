@@ -57,4 +57,15 @@ public class Moment {
     public int commentsCount() {
         return this.commentsList.size();
     }
+
+    @OneToMany(mappedBy = "moment")
+    private List<Like> likes = new ArrayList<>();
+
+    public void addLike(Like like) {
+        likes.add(like);
+    }
+
+    public int likesCount() {
+        return likes.size();
+    }
 }
