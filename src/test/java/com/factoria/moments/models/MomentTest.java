@@ -36,4 +36,21 @@ class MomentTest {
         assertThat(sut, equalTo(1));
         /*assertThat(sut, equalTo(2)); FAIL TEST */
     }
+
+    @Test
+    void momentShouldNotLetAddLikeIfMomentDoesNotMatch() {
+        var moment1 = new Moment();
+        var moment2 = new Moment();
+        var user = new User();
+        moment1.setId(1L);
+        moment2.setId(1L);
+        user.setId(1L);
+        var like = new Like(user, moment1);
+        moment2.addLike(like);
+
+        int sut = moment2.likesCount();
+
+        assertThat(sut, equalTo(0));
+        /*assertThat(sut, equalTo(1)); FAIL TEST */
+    }
 }

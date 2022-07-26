@@ -62,6 +62,7 @@ public class Moment {
     private List<Like> likes = new ArrayList<>();
 
     public void addLike(Like like) {
+        if(!like.getMoment().equals(this)) return; // CLÀUSULA DE SALVAGUARDA
         likes.add(like);
     }
 
