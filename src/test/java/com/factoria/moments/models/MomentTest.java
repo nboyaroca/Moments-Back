@@ -55,6 +55,7 @@ class MomentTest {
         /*assertThat(sut, equalTo(1)); FAIL TEST */
     }
 
+    // HAPPY PATH
     @Test
     void momentShouldKnowIfUserLikesIts() {
         var moment = new Moment();
@@ -65,5 +66,19 @@ class MomentTest {
 
         assertThat(sut, equalTo(true));
         /*assertThat(sut, equalTo(false)); FAIL TEST */
+    }
+
+    // BAD PATH
+    @Test
+    void LikerShouldBeIncludedInLikeListToAppear() {
+        var moment = new Moment();
+        var liker = new User();
+        var notLiker = new User();
+        var like = new Like(liker, moment);
+        moment.addLike(like);
+        boolean sut = moment.isLiked(notLiker);
+
+        assertThat(sut, equalTo(false));
+        /*assertThat(sut, equalTo(true)); FAIL TEST */
     }
 }

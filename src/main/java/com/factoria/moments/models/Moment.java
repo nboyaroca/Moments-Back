@@ -73,7 +73,7 @@ public class Moment {
     }
 
     public boolean isLiked(User user) {
-        var likeLiker = likes.stream().filter(Like -> Like.getLiker().equals(user)).findFirst();
+        var likeLiker = likes.stream().filter(Like -> Like.getLiker() == (user)).findFirst();
         if(likeLiker.isEmpty()) return false;
         return true;
     }
