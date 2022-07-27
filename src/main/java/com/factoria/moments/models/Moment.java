@@ -62,11 +62,19 @@ public class Moment {
     private List<Like> likes = new ArrayList<>();
 
     public void addLike(Like like) {
-        if(!like.getMoment().equals(this)) return; // CLÀUSULA DE SALVAGUARDA
+        System.out.println(like.getMoment()); // console log de java
+        System.out.println(this);
+        if(like.getMoment()!=this) return; // CLÀUSULA DE SALVAGUARDA
         likes.add(like);
     }
 
     public int likesCount() {
         return likes.size();
+    }
+
+    public boolean isLiked(User user) {
+        var likeLiker = likes.stream().filter(Like -> Like.getLiker().equals(user)).findFirst();
+        if(likeLiker.isEmpty()) return false;
+        return true;
     }
 }

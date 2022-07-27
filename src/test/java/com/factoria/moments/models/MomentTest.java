@@ -37,13 +37,14 @@ class MomentTest {
         /*assertThat(sut, equalTo(2)); FAIL TEST */
     }
 
+    // BAD PATH
     @Test
     void momentShouldNotLetAddLikeIfMomentDoesNotMatch() {
         var moment1 = new Moment();
         var moment2 = new Moment();
         var user = new User();
-        moment1.setId(1L);
-        moment2.setId(1L);
+        /* moment1.setId(1L);
+        moment2.setId(2L);*/
         user.setId(1L);
         var like = new Like(user, moment1);
         moment2.addLike(like);
@@ -52,5 +53,17 @@ class MomentTest {
 
         assertThat(sut, equalTo(0));
         /*assertThat(sut, equalTo(1)); FAIL TEST */
+    }
+
+    @Test
+    void momentShouldKnowIfUserLikesIts() {
+        var moment = new Moment();
+        var liker = new User();
+        var like = new Like(liker, moment);
+        moment.addLike(like);
+        boolean sut = moment.isLiked(liker);
+
+        assertThat(sut, equalTo(true));
+        /*assertThat(sut, equalTo(false)); FAIL TEST */
     }
 }

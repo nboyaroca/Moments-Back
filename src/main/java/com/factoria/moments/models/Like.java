@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Table(name = "Likes")
 @NoArgsConstructor
 public class Like {
-    public Like(User lover, Moment moment) {
-        this.lover = lover;
+    public Like(User liker, Moment moment) {
+        this.liker = liker;
         this.moment = moment;
     }
 
@@ -21,8 +21,8 @@ public class Like {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "lover_id")
-    private User lover;
+    @JoinColumn(name = "liker_id")
+    private User liker;
 
     @ManyToOne
     @JoinColumn(name = "moment_id")
