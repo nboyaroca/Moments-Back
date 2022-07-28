@@ -30,4 +30,5 @@ public class Like {
     @JoinColumn(name = "moment_id")
     @JsonIgnore
     private Moment moment;
+
 }
