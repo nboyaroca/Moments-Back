@@ -58,9 +58,12 @@ public class Moment {
         return this.commentsList.size();
     }
 
+
+    // LIKE
     @OneToMany(mappedBy = "moment")
     private List<Like> likes = new ArrayList<>();
 
+    // LIKES IN A MOMENT
     public void addLike(Like like) {
         System.out.println(like.getMoment()); // console log de java
         System.out.println(this);
@@ -74,7 +77,7 @@ public class Moment {
 
     public boolean isLiked(User user) {
         var likeLiker = likes.stream().filter(Like -> Like.getLiker() == (user)).findFirst();
-        if(likeLiker.isEmpty()) return false;
+        if (likeLiker.isEmpty()) return false;
         return true;
     }
 }

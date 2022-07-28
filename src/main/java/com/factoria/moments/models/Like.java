@@ -1,5 +1,6 @@
 package com.factoria.moments.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -22,9 +23,11 @@ public class Like {
 
     @ManyToOne
     @JoinColumn(name = "liker_id")
+    @JsonIgnore
     private User liker;
 
     @ManyToOne
     @JoinColumn(name = "moment_id")
+    @JsonIgnore
     private Moment moment;
 }

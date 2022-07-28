@@ -80,3 +80,17 @@ INTO
   (comment, moment_id, publisher_id)
 VALUES
   ('God save the queen, officially used in Commonwealth Countries', 1, 1);
+
+
+  INSERT
+INTO
+  likes
+  (liker_id, moment_id)
+VALUES
+  (1, 1);
+INSERT
+INTO
+  likes
+  (liker_id, moment_id)
+VALUES
+  (1, 8);

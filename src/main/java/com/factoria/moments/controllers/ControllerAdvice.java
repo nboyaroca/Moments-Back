@@ -14,7 +14,7 @@ public class ControllerAdvice {
     @ExceptionHandler(value = RuntimeException.class)
     public ResponseEntity<ErrorDto> runtimeExceptionHandler(RuntimeException ex) {
         var error = ErrorDto.builder()
-                .code("P-550")
+                .code("M-550")
                 .message(ex.getMessage())
                 .build();
 

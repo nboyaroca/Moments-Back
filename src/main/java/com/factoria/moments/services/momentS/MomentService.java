@@ -17,6 +17,7 @@ public class MomentService implements IMomentService{
     public MomentService(IMomentRepository momentRepository) {
         this.momentRepository = momentRepository;
     }
+
     @Override
     public List<Moment> getAll() {  // get és el nom que jo li dono
         return momentRepository.findAll(); //find és del repo
@@ -33,7 +34,7 @@ public class MomentService implements IMomentService{
     @Override
     public Moment findById(Long id) {
         var opMoment = momentRepository.findById(id);
-        if (opMoment.isEmpty()) throw new NotFoundException("Moment Not Found", "P-150");
+        if (opMoment.isEmpty()) throw new NotFoundException("Moment Not Found", "M-150");
 
         return opMoment.get();
     }
@@ -48,7 +49,6 @@ public class MomentService implements IMomentService{
         return momentRepository.save(moment);
     }
 
-
     @Override
     public Moment updateMoment(Long id, MomentRequestDto updatedMoment, User authUser) {
         var moment = momentRepository.findById(id).get();
@@ -58,9 +58,6 @@ public class MomentService implements IMomentService{
         moment.setPublisher(authUser);
         return momentRepository.save(moment);
     }
-
-
-
 
     @Override
     public boolean deleteById(Long id) {
@@ -73,7 +70,4 @@ public class MomentService implements IMomentService{
     public List<Moment> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search) {
         return momentRepository.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search);
     }
-
-
-
 }
