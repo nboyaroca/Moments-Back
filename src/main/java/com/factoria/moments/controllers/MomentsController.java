@@ -44,9 +44,9 @@ public class MomentsController {
 
     // Get a moment by id AMB control d'errors
     @GetMapping("/moments/{id}")
-    ResponseEntity<Moment> getById(@PathVariable Long id) {
+    ResponseEntity<MomentResponseDto> getById(@PathVariable Long id) {
         var authUser = userService.getById(1L);
-        Moment moment = momentService.findById(id);
+        MomentResponseDto moment = momentService.findById(id, authUser);
         return new ResponseEntity<>(moment, HttpStatus.OK);
     }
 

@@ -29,5 +29,6 @@ public class MomentMapper {
         moments.forEach(Moment ->responseList.add(this.mapMomentToMomentResponseDto(Moment, authUser)));
         return responseList;
     }
+
 }
 

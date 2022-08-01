@@ -21,6 +21,10 @@ public class MomentService implements IMomentService{
         this.momentRepository = momentRepository;
     }
 
+    public Moment getWholeMoment(Long id) {
+        return momentRepository.findById(id).get();
+    }
+
     @Override
     public List<MomentResponseDto> getAll(User authUser) {
        return new MomentMapper().mapMultipleMomentsToListResponse(momentRepository.findAll(), authUser);
@@ -36,11 +40,12 @@ public class MomentService implements IMomentService{
 
     // Servei findById AMB control d'errors
     @Override
-    public Moment findById(Long id) {
+    public MomentResponseDto findById(Long id, User authUser) {
         var opMoment = momentRepository.findById(id);
         if (opMoment.isEmpty()) throw new NotFoundException("Moment Not Found", "M-150");
-        System.out.println(opMoment.get().likesCount());
-        return opMoment.get();
+        MomentResponseDto responseMoment = new MomentMapper().mapMomentToMomentResponseDto(opMoment.get(), authUser);
+        return responseMoment;
+
     }
 
     @Override

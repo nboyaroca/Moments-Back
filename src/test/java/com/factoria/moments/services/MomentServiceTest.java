@@ -28,9 +28,12 @@ class MomentServiceTest {
     void getAllReturnsAListOfMoments() {
         var momentService = new MomentService(momentRepository);
         var momentList = List.of(new Moment(), new Moment());
+        var authUser = new User();
+        authUser.setId(1L);
+
         Mockito.when(momentRepository.findAll()).thenReturn(momentList);
 
-        var sut = momentService.getAll();
+        var sut = momentService.getAll(authUser);
 
         assertThat(sut.size(), equalTo(2));
     }
@@ -54,10 +57,12 @@ class MomentServiceTest {
     void findByIdShouldReturnAMomentWithSameParamId() {
         var momentService = new MomentService(momentRepository);
         var moment = this.createMoment(); // si no tens això cal que cada vegada creis el moment i el user
+        var authUser = new User();
+        authUser.setId(1L);
 
         Mockito.when(momentRepository.findById(any(Long.class))).thenReturn(Optional.of(moment));
 
-        var sut = momentService.findById(1L);
+        var sut = momentService.findById(1L, authUser);
 
         assertThat(sut.getTitle(), equalTo(moment.getTitle()));
         /*assertThat(sut.getTitle(), equalTo("HelloWorld"); TEST FAIL */

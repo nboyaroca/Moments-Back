@@ -1,10 +1,7 @@
 package com.factoria.moments.controllers;
 
-import com.factoria.moments.dtos.CommentRequestDto;
 import com.factoria.moments.dtos.LikeRequestDto;
-import com.factoria.moments.models.Comment;
 import com.factoria.moments.models.Like;
-import com.factoria.moments.models.Moment;
 import com.factoria.moments.models.User;
 import com.factoria.moments.services.likeS.ILikeService;
 import com.factoria.moments.services.momentS.IMomentService;
@@ -48,10 +45,11 @@ public class LikeController {
         return new ResponseEntity<>(likes, HttpStatus.OK);
     }
 
+    // POST add a like
     @PostMapping("/likes")
-    ResponseEntity<Like> createLike(@RequestBody LikeRequestDto likeRequest) {
+    ResponseEntity<Boolean> createLike(@RequestBody LikeRequestDto likeRequest) {
         User authUser = getAuthUser(likeRequest.getUserId());
-        var like = likeService.createLike(likeRequest, authUser);
+        var like = likeService.toggleLike(likeRequest, authUser);
         return new ResponseEntity<>(like, HttpStatus.OK);
     }
 

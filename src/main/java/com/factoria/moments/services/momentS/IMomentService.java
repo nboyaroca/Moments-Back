@@ -12,9 +12,11 @@ public interface IMomentService {
     //    List<Moment> findAll();
 // ho podem mutejar perquè ja està implementat pel JPA
 
+    Moment getWholeMoment(Long id);
+
     List<MomentResponseDto> getAll(User authUser);
 
-    Moment findById(Long id);
+    MomentResponseDto findById(Long id, User authUser);
 
     Moment createMoment(MomentRequestDto momentDto, User authUser);
 
