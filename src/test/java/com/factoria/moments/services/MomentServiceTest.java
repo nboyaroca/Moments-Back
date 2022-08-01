@@ -114,10 +114,12 @@ class MomentServiceTest {
     void deleteByIdShouldDeleteAMomentById() {
         var momentService = new MomentService(momentRepository);
         var moment = this.createMoment();
+        var user = new User();
+        user.setId(1L);
 
         Mockito.when(momentRepository.findById(any(Long.class))).thenReturn(Optional.of(moment));
 
-        var sut = momentService.deleteById(1L);
+        var sut = momentService.deleteById(1L, user);
 
         assertThat(sut, equalTo(true));
         /*assertThat(sut, equalTo(false)); FAILED TEST */

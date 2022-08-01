@@ -1,6 +1,7 @@
 package com.factoria.moments.services.momentS;
 
 import com.factoria.moments.dtos.MomentRequestDto;
+import com.factoria.moments.exceptions.BadRequestException;
 import com.factoria.moments.exceptions.NotFoundException;
 import com.factoria.moments.models.Moment;
 import com.factoria.moments.models.User;
@@ -51,17 +52,20 @@ public class MomentService implements IMomentService{
 
     @Override
     public Moment updateMoment(Long id, MomentRequestDto updatedMoment, User authUser) {
-        var moment = momentRepository.findById(id).get();
-        moment.setTitle(updatedMoment.getTitle());
-        moment.setDescription(updatedMoment.getDescription());
-        moment.setImgUrl(updatedMoment.getImgUrl());
-        moment.setPublisher(authUser);
-        return momentRepository.save(moment);
+        var moment = momentRepository.findById(id);
+        if (moment.isEmpty()) throw new NotFoundException("Moment doesn't exist", "M-404");
+        if (moment.get().getPublisher()==authUser) throw new BadRequestException("Only the publisher can update his moment", "M-007");
+        moment.get().setTitle(updatedMoment.getTitle());
+        moment.get().setDescription(updatedMoment.getDescription());
+        moment.get().setImgUrl(updatedMoment.getImgUrl());
+        moment.get().setPublisher(authUser);
+        return momentRepository.save(moment.get());
     }
 
     @Override
-    public boolean deleteById(Long id) {
+    public boolean deleteById(Long id, User authUser) {
         var moment= momentRepository.findById(id).get();
+        if (moment.getPublisher()==authUser) throw new BadRequestException("Only the publisher can delete his moment", "M-008");
         this.momentRepository.delete(moment);
         return true;
     }

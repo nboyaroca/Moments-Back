@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class Moment {
    // COMMENT
    @OneToMany(mappedBy = "moment")
    @JsonIgnore // evita bucles a les relacions
+   @Cascade(org.hibernate.annotations.CascadeType.DELETE) //Quan vols borrar un moment, cal que s'esborri també el comentari associat
    private List<Comment> commentsList = new ArrayList<>();
 
 
@@ -63,6 +65,7 @@ public class Moment {
     // LIKE
     @OneToMany(mappedBy = "moment")
     @JsonIgnore
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Like> likes = new ArrayList<>();
 
     // LIKES IN A MOMENT

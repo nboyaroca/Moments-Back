@@ -65,7 +65,8 @@ public class MomentsController {
     // Delete a moment
     @DeleteMapping("/moments/{id}")
         boolean deleteMoment(@PathVariable Long id) { //això és el que retorna
-        return this.momentService.deleteById(id);
+        var authUser = userService.getById(1L);
+        return this.momentService.deleteById(id, authUser);
     }
 
     @GetMapping(value = "/moments", params = "search")

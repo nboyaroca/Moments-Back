@@ -19,7 +19,7 @@ public interface IMomentService {
 
     Moment updateMoment(Long id, MomentRequestDto updatedMoment, User authUser);
 
-    boolean deleteById(Long id);
+    boolean deleteById(Long id, User authUser);
 
     List<Moment> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search);
 }
