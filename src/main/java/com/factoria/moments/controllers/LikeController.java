@@ -1,6 +1,7 @@
 package com.factoria.moments.controllers;
 
 import com.factoria.moments.dtos.CommentRequestDto;
+import com.factoria.moments.dtos.LikeRequestDto;
 import com.factoria.moments.models.Comment;
 import com.factoria.moments.models.Like;
 import com.factoria.moments.models.Moment;
@@ -19,37 +20,45 @@ import java.util.List;
 public class LikeController {
 
     private ILikeService likeService;
-    private IMomentService momentService;
     private IUserService userService;
 
     public LikeController(ILikeService likeService, IMomentService momentService, IUserService userService) {
         this.likeService = likeService;
-        this.momentService = momentService;
         this.userService = userService;
     }
 
+    // GET all likes
     @GetMapping("/likes")
-    List<Like> getAll() {
-        return this.likeService.getAll();
+    ResponseEntity<List<Like>> getAll() {
+        var likes = likeService.getAll();
+        return new ResponseEntity<>(likes, HttpStatus.OK);
     }
 
+    // GET like by id
     @GetMapping("/likes/{id}")
     ResponseEntity<Like> getById(@PathVariable Long id) {
         Like like = likeService.getById(id);
         return new ResponseEntity<>(like, HttpStatus.OK);
     }
-}
 
+    // GET like by moment id
+    @GetMapping("/moments/{id}/likes")
+    ResponseEntity<List<Like>> getMomentLikes(@PathVariable Long id) {
+        var likes = likeService.getAllByMomentId(id);
+        return new ResponseEntity<>(likes, HttpStatus.OK);
+    }
 
-
-    /*@PostMapping("/likes")
-    Like createLike(@RequestBody Like like) {
-        User authUser = getAuthUser(like.getUserId());
-        return likeService.createLike(like, authUser);
+    @PostMapping("/likes")
+    ResponseEntity<Like> createLike(@RequestBody LikeRequestDto likeRequest) {
+        User authUser = getAuthUser(likeRequest.getUserId());
+        var like = likeService.createLike(likeRequest, authUser);
+        return new ResponseEntity<>(like, HttpStatus.OK);
     }
 
     private User getAuthUser(Long id) {
-        return userService.getUserById(id);
-    }*/
+        return userService.getById(id);
+    }
+
+}
 
 

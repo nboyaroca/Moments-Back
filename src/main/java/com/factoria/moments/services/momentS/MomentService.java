@@ -35,7 +35,7 @@ public class MomentService implements IMomentService{
     public Moment findById(Long id) {
         var opMoment = momentRepository.findById(id);
         if (opMoment.isEmpty()) throw new NotFoundException("Moment Not Found", "M-150");
-
+        System.out.println(opMoment.get().likesCount());
         return opMoment.get();
     }
 
@@ -69,5 +69,13 @@ public class MomentService implements IMomentService{
     @Override
     public List<Moment> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search) {
         return momentRepository.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search);
+    }
+
+    // Com puc saber si aquest mètode està bé?
+    public boolean deleteByUser(Long delId, User auth) {
+        Moment moment = momentRepository.findById(delId).get();
+        if(moment.getPublisher().getId() != auth.getId()) return false;
+        momentRepository.delete(moment);
+        return true;
     }
 }

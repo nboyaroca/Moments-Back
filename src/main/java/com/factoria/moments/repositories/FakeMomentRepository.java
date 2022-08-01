@@ -2,7 +2,7 @@ package com.factoria.moments.repositories;
 
 
 import com.factoria.moments.models.Moment;
-import org.springframework.stereotype.Repository;
+/*import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -30,4 +30,4 @@ public class FakeMomentRepository {
     }
 
 
-}
+}*/

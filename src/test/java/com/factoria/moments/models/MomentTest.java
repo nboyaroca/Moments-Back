@@ -68,7 +68,7 @@ class MomentTest {
         /*assertThat(sut, equalTo(false)); FAIL TEST */
     }
 
-    // BAD PATH
+    // UNHAPPY PATH
     @Test
     void LikerShouldBeIncludedInLikeListToAppear() {
         var moment = new Moment();

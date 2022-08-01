@@ -33,20 +33,21 @@ public class Moment {
    @JoinColumn(name = "publisher_id")
    private User publisher;
 
+
+   // COMMENT
    @OneToMany(mappedBy = "moment")
    @JsonIgnore // evita bucles a les relacions
    private List<Comment> commentsList = new ArrayList<>();
 
 
     // CONSTRUCTORS
-    public Moment(String title, String description, String imgUrl, Long id) {
+   /* public Moment(String title, String description, String imgUrl, Long id) {
         this.title = title.toLowerCase();
         this.description = description.toLowerCase();
         this.imgUrl = imgUrl;
         this.id = id;
         this.publisher = new User();
-    }
-
+    }*/
 
     // COMMENTS IN A MOMENT POT ESTAR TAMBÉ EN UN RESPONSES DTO O CRIDAR-LO PER DTO PER SERIALITZAR-LO
     public void addComment(Comment comment) {
@@ -61,16 +62,18 @@ public class Moment {
 
     // LIKE
     @OneToMany(mappedBy = "moment")
+    @JsonIgnore
     private List<Like> likes = new ArrayList<>();
 
     // LIKES IN A MOMENT
     public void addLike(Like like) {
-        System.out.println(like.getMoment()); // console log de java
-        System.out.println(this);
+        /*System.out.println(like.getMoment()); // console log de java*/
+        /*System.out.println(this);*/
         if(like.getMoment()!=this) return; // CLÀUSULA DE SALVAGUARDA
         likes.add(like);
     }
 
+    @JsonSerialize
     public int likesCount() {
         return likes.size();
     }

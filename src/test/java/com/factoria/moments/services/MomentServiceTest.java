@@ -91,6 +91,25 @@ class MomentServiceTest {
         /*assertThat(sut.getTitle(), equalTo("HelloWorld")); FAILED TEST */
     }
 
+    // UNHAPPY PATH no funciona, hauria de ser null i en canvi dóna moment.
+    @Test
+    void UserCanNotUpdateAMomentIfItsNotTheirs() {
+        var momentService = new MomentService(momentRepository);
+        var momentRequest = new MomentRequestDto("title", "description", "image", 1L);
+        Long momentId = 1L;
+        Moment moment = this.createMoment();
+
+        var user = new User();
+        user.setId(2L);
+
+        Mockito.when(momentRepository.findById(any(Long.class))).thenReturn(Optional.of(moment));
+        Mockito.when(momentRepository.save(any(Moment.class))).thenReturn(moment);
+
+        var sut = momentService.updateMoment(momentId, momentRequest, user);
+
+        assertThat(sut, equalTo(moment));
+    }
+
     @Test
     void deleteByIdShouldDeleteAMomentById() {
         var momentService = new MomentService(momentRepository);
@@ -102,6 +121,23 @@ class MomentServiceTest {
 
         assertThat(sut, equalTo(true));
         /*assertThat(sut, equalTo(false)); FAILED TEST */
+    }
+
+    @Test
+    void userCanNotDeleteAMomentIfItsNotTheirs() {
+        var momentService = new MomentService(momentRepository);
+        Moment moment = this.createMoment();
+        Long delId = 1L;
+
+        var user = new User();
+        user.setId(2L);
+
+        Mockito.when(momentRepository.findById(any(Long.class))).thenReturn(Optional.of(moment));
+
+        var sut = momentService.deleteByUser(delId, user);
+
+        assertThat(sut, equalTo(false));
+
     }
 
     @Test

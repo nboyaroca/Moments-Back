@@ -29,17 +29,19 @@ public class CommentController {
         this.userService = userService;
     }
 
-
+    // GET all comments
     @GetMapping("/comments")
     List<Comment> getAll() {
         return this.commentService.findAll();
     }
 
+    // GET comments by id
     @GetMapping("/comments/{id}")
     Comment getById(@PathVariable Long id) {
         return this.commentService.getById(id);
     }
 
+    // GET comments by moment id
     @GetMapping("/moments/{id}/comments")
     List<Comment> getMomentComments(@PathVariable Long id) {
         return commentService.findAllByMomentId(id);

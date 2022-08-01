@@ -1,5 +1,6 @@
 package com.factoria.moments.services.likeS;
 
+import com.factoria.moments.dtos.LikeRequestDto;
 import com.factoria.moments.models.Like;
 import com.factoria.moments.models.User;
 
@@ -10,9 +11,8 @@ public interface ILikeService {
 
     Like getById(Long id);
 
+    List<Like> getAllByMomentId(Long id);
 
-    Like createLike(Like like, User authUser);
-
-
+    Like createLike(LikeRequestDto likeRequest, User authUser);
 
 }
