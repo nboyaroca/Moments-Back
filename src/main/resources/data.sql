@@ -100,4 +100,3 @@ INTO
   (liker_id, moment_id)
 VALUES
   (1, 8);
-

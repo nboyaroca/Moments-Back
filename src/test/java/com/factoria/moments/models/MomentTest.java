@@ -3,11 +3,8 @@ package com.factoria.moments.models;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MomentTest {
@@ -62,7 +59,7 @@ class MomentTest {
         var liker = new User();
         var like = new Like(liker, moment);
         moment.addLike(like);
-        boolean sut = moment.isLiked(liker);
+        boolean sut = moment.checkIfLiked(liker);
 
         assertThat(sut, equalTo(true));
         /*assertThat(sut, equalTo(false)); FAIL TEST */
@@ -76,7 +73,7 @@ class MomentTest {
         var notLiker = new User();
         var like = new Like(liker, moment);
         moment.addLike(like);
-        boolean sut = moment.isLiked(notLiker);
+        boolean sut = moment.checkIfLiked(notLiker);
 
         assertThat(sut, equalTo(false));
         /*assertThat(sut, equalTo(true)); FAIL TEST */

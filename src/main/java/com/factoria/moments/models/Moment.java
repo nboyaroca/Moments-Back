@@ -81,9 +81,11 @@ public class Moment {
         return likes.size();
     }
 
-    public boolean isLiked(User user) {
+    @JsonSerialize
+    public boolean checkIfLiked(User user) {
         var likeLiker = likes.stream().filter(Like -> Like.getLiker() == (user)).findFirst();
         if (likeLiker.isEmpty()) return false;
         return true;
     }
+
 }

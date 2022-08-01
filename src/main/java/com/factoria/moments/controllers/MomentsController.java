@@ -1,6 +1,7 @@
 package com.factoria.moments.controllers;
 
 import com.factoria.moments.dtos.MomentRequestDto;
+import com.factoria.moments.dtos.MomentResponseDto;
 import com.factoria.moments.models.Moment;
 import com.factoria.moments.models.User;
 import com.factoria.moments.services.momentS.IMomentService;
@@ -28,9 +29,10 @@ public class MomentsController {
 
     // Get all moments endpoint
     @GetMapping("/moments")
-    List<Moment> getAllMoments() {
-        var momentList = this.momentService.getAll();
-        return momentList;
+    ResponseEntity<List<MomentResponseDto>> getAllMoments() {
+        var authUser = userService.getById(1L);
+        var moments = momentService.getAll(authUser);
+        return new ResponseEntity<>(moments, HttpStatus.OK);
     }
 
     // Get a moment by id SENSE control d'errors
@@ -43,6 +45,7 @@ public class MomentsController {
     // Get a moment by id AMB control d'errors
     @GetMapping("/moments/{id}")
     ResponseEntity<Moment> getById(@PathVariable Long id) {
+        var authUser = userService.getById(1L);
         Moment moment = momentService.findById(id);
         return new ResponseEntity<>(moment, HttpStatus.OK);
     }

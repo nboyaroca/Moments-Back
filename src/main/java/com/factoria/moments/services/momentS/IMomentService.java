@@ -1,6 +1,7 @@
 package com.factoria.moments.services.momentS;
 
 import com.factoria.moments.dtos.MomentRequestDto;
+import com.factoria.moments.dtos.MomentResponseDto;
 import com.factoria.moments.models.Moment;
 import com.factoria.moments.models.User;
 
@@ -11,7 +12,7 @@ public interface IMomentService {
     //    List<Moment> findAll();
 // ho podem mutejar perquè ja està implementat pel JPA
 
-    List<Moment> getAll();
+    List<MomentResponseDto> getAll(User authUser);
 
     Moment findById(Long id);
 
