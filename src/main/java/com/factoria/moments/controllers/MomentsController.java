@@ -53,29 +53,33 @@ public class MomentsController {
 
     // Add a new moment
     @PostMapping("/moments")
-    Moment createMoment(@RequestBody MomentRequestDto momentRequest) {
+    ResponseEntity<MomentResponseDto> createMoment(@RequestBody MomentRequestDto momentRequest) {
         var authUser = userService.getById(momentRequest.getUserId());
-        return momentService.createMoment(momentRequest, authUser);
+        MomentResponseDto moment = momentService.createMoment(momentRequest, authUser);
+        return new ResponseEntity<>(moment, HttpStatus.OK);
     }
 
     // Edit a moment
     @PutMapping("/moments/{id}")
-    Moment updateMoment(@PathVariable Long id, @RequestBody MomentRequestDto updatedMoment) {
+    ResponseEntity<MomentResponseDto> updateMoment(@PathVariable Long id, @RequestBody MomentRequestDto updatedMoment) {
         var authUser = userService.getById(updatedMoment.getUserId());
-        return momentService.updateMoment(id, updatedMoment, authUser);
+        MomentResponseDto moment = momentService.updateMoment(id, updatedMoment, authUser);
+        return new ResponseEntity<>(moment, HttpStatus.OK);
     }
 
     // Delete a moment
     @DeleteMapping("/moments/{id}")
-        boolean deleteMoment(@PathVariable Long id) { //això és el que retorna
+    ResponseEntity<Boolean> deleteMoment(@PathVariable Long id) { //això és el que retorna
         var authUser = userService.getById(1L);
-        return this.momentService.deleteById(id, authUser);
+        var momentToDelete = this.momentService.deleteById(id, authUser);
+        return new ResponseEntity<>(momentToDelete, HttpStatus.OK);
     }
 
     @GetMapping(value = "/moments", params = "search")
-    List<Moment> getMomentSearch(@RequestParam String search) {
-        var searched = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search);
-        return searched;
+    ResponseEntity<List<MomentResponseDto>> getMomentSearch(@RequestParam String search) {
+        var authUser = userService.getById(1L);
+        var searched = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search, authUser);
+        return new ResponseEntity<>(searched, HttpStatus.OK);
     }
 
     /*@GetMapping(value = "/moments", params = "search")

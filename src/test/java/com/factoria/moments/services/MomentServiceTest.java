@@ -96,7 +96,7 @@ class MomentServiceTest {
         /*assertThat(sut.getTitle(), equalTo("HelloWorld")); FAILED TEST */
     }
 
-    // UNHAPPY PATH no funciona, hauria de ser null i en canvi dóna moment.
+    // UNHAPPY PATH no funciona, hauria de ser null i en canvi dóna moment.// ara ni funciona!!!!
     @Test
     void UserCanNotUpdateAMomentIfItsNotTheirs() {
         var momentService = new MomentService(momentRepository);
@@ -152,10 +152,12 @@ class MomentServiceTest {
         var momentService = new MomentService(momentRepository);
         var moment = this.createMoment();
         var momentList= List.of(moment, moment);
+        var authUser = new User();
+        authUser.setId(1L);
 
         Mockito.when(momentRepository.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(any(String.class))).thenReturn(momentList);
 
-        var sut = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase("search");
+        var sut = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase("search", authUser);
 
         assertThat(sut.size(), equalTo(2));
         /*assertThat(sut.size(), equalTo(3)); FAILED TEST */

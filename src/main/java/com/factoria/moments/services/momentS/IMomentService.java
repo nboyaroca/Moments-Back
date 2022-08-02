@@ -18,11 +18,11 @@ public interface IMomentService {
 
     MomentResponseDto findById(Long id, User authUser);
 
-    Moment createMoment(MomentRequestDto momentDto, User authUser);
+    MomentResponseDto createMoment(MomentRequestDto momentDto, User authUser);
 
-    Moment updateMoment(Long id, MomentRequestDto updatedMoment, User authUser);
+    MomentResponseDto updateMoment(Long id, MomentRequestDto updatedMoment, User authUser);
 
     boolean deleteById(Long id, User authUser);
 
-    List<Moment> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search);
+    List<MomentResponseDto> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search, User authUser);
 }

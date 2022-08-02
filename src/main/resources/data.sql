@@ -10,7 +10,7 @@ INTO
   users
   (user_name, avatar)
 VALUES
-  ('James Bond', 'https://www.dighttps://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bond-gun-barrel-1601542498.jpg');
+  ('James Bond', 'https://e3.365dm.com/16/07/2048x1152/evs-xtaccess-2012-10-05-cam-c-06h41m42s20-1_3646884.jpg');
 
 
 INSERT INTO

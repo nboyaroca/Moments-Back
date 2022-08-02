@@ -49,17 +49,18 @@ public class MomentService implements IMomentService{
     }
 
     @Override
-    public Moment createMoment(MomentRequestDto momentDto, User authUser){
+    public MomentResponseDto createMoment(MomentRequestDto momentDto, User authUser){
         var moment = new Moment();
         moment.setTitle(momentDto.getTitle());
         moment.setDescription(momentDto.getDescription());
         moment.setImgUrl(momentDto.getImgUrl());
         moment.setPublisher(authUser);
-        return momentRepository.save(moment);
+        momentRepository.save(moment);
+        return new MomentMapper().mapMomentToMomentResponseDto(moment, authUser);
     }
 
     @Override
-    public Moment updateMoment(Long id, MomentRequestDto updatedMoment, User authUser) {
+    public MomentResponseDto updateMoment(Long id, MomentRequestDto updatedMoment, User authUser) {
         var moment = momentRepository.findById(id);
         if (moment.isEmpty()) throw new NotFoundException("Moment doesn't exist", "M-404");
         if (moment.get().getPublisher()!=authUser) throw new BadRequestException("Only the publisher can update his moment", "M-007");
@@ -67,7 +68,8 @@ public class MomentService implements IMomentService{
         moment.get().setDescription(updatedMoment.getDescription());
         moment.get().setImgUrl(updatedMoment.getImgUrl());
         moment.get().setPublisher(authUser);
-        return momentRepository.save(moment.get());
+        momentRepository.save(moment.get());
+        return new MomentMapper().mapMomentToMomentResponseDto(moment.get(), authUser);
     }
 
     @Override
@@ -80,8 +82,9 @@ public class MomentService implements IMomentService{
     }
 
     @Override
-    public List<Moment> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search) {
-        return momentRepository.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search);
+    public List<MomentResponseDto> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search, User authUser) {
+        var searched= momentRepository.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search);
+        return new MomentMapper().mapMultipleMomentsToListResponse(searched, authUser);
     }
 
     // Com puc saber si aquest mètode està bé?
