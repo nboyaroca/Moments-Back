@@ -24,6 +24,7 @@ public class Moment {
     private String title = "default title";
     private String description = "default description";
     private String imgUrl = "default image.jpg";
+
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
    @Column(name = "id", nullable = false)
