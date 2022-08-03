@@ -16,4 +16,7 @@ spring:
     defer-datasource-initialization: true
     hibernate:
       ddl-auto: create-drop
-
+bookshelf:
+  app:
+    jwtSecret: xGVgsxuqBU3xuv9J
+    expirationMs: 86400000
