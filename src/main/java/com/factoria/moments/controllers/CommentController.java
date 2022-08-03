@@ -1,5 +1,6 @@
 package com.factoria.moments.controllers;
 
+import com.factoria.moments.auth.facade.IAuthenticationFacade;
 import com.factoria.moments.dtos.CommentRequestDto;
 import com.factoria.moments.dtos.MomentRequestDto;
 import com.factoria.moments.models.Comment;
@@ -7,6 +8,7 @@ import com.factoria.moments.models.User;
 import com.factoria.moments.services.commentS.ICommentService;
 import com.factoria.moments.services.momentS.IMomentService;
 import com.factoria.moments.services.userS.IUserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,14 +21,16 @@ public class CommentController {
     // ATRIBUTS
     private ICommentService commentService;
     private IMomentService momentService;
-    private IUserService userService;
+    private IAuthenticationFacade authenticationFacade;
 
 
     // CONSTRUCTOR
-    public CommentController(ICommentService commentService, IMomentService momentService, IUserService userService) {
+
+
+    public CommentController(ICommentService commentService, IMomentService momentService, IAuthenticationFacade authenticationFacade) {
         this.commentService = commentService;
         this.momentService = momentService;
-        this.userService = userService;
+        this.authenticationFacade = authenticationFacade;
     }
 
     // GET all comments
@@ -49,15 +53,11 @@ public class CommentController {
 
 
     // l'sprint NO demana crear un comentari
-
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/comments")
     Comment createComment(@RequestBody CommentRequestDto commentDto) {
-        User authUser = getAuthUser(commentDto.getUserId());
+        var authUser = authenticationFacade.getAuthUser();
         return commentService.createComment(commentDto, authUser);
-    }
-
-     private User getAuthUser(Long id) {
-        return userService.getById(id);
     }
 
 }

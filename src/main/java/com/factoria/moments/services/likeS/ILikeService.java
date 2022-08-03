@@ -13,6 +13,6 @@ public interface ILikeService {
 
     List<Like> getAllByMomentId(Long id);
 
-    Boolean toggleLike(LikeRequestDto likeRequest, User authUser);
+    Boolean toggleLike(LikeRequestDto likeRequest);
 
 }
