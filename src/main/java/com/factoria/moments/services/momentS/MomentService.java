@@ -1,5 +1,6 @@
 package com.factoria.moments.services.momentS;
 
+import com.factoria.moments.auth.facade.IAuthenticationFacade;
 import com.factoria.moments.dtos.MomentRequestDto;
 import com.factoria.moments.dtos.MomentResponseDto;
 import com.factoria.moments.exceptions.BadRequestException;
@@ -16,9 +17,11 @@ import java.util.List;
 public class MomentService implements IMomentService{
 
     private IMomentRepository momentRepository;
+    private IAuthenticationFacade authenticationFacade;
 
-    public MomentService(IMomentRepository momentRepository) {
+    public MomentService(IMomentRepository momentRepository, IAuthenticationFacade authenticationFacade) {
         this.momentRepository = momentRepository;
+        this.authenticationFacade = authenticationFacade;
     }
 
     public Moment getWholeMoment(Long id) {
@@ -26,8 +29,8 @@ public class MomentService implements IMomentService{
     }
 
     @Override
-    public List<MomentResponseDto> getAll(User authUser) {
-       return new MomentMapper().mapMultipleMomentsToListResponse(momentRepository.findAll(), authUser);
+    public List<MomentResponseDto> getAll() {
+       return new MomentMapper().mapMultipleMomentsToListResponse(momentRepository.findAll(), this.authenticationFacade.getAuthUser());
     } // la funció getAll() ens torna el findAll() del repository
 
 

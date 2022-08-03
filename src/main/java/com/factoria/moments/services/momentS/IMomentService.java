@@ -14,7 +14,9 @@ public interface IMomentService {
 
     Moment getWholeMoment(Long id);
 
-    List<MomentResponseDto> getAll(User authUser);
+/*    List<MomentResponseDto> getAll(User authUser);*/
+
+    List<MomentResponseDto> getAll();
 
     MomentResponseDto findById(Long id, User authUser);
 

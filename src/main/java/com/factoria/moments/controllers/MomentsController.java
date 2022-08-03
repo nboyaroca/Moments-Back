@@ -33,12 +33,12 @@ public class MomentsController {
         this.authenticationFacade = authenticationFacade;
     }
 
+
+
     // Get all moments endpoint
-    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/moments")
     ResponseEntity<List<MomentResponseDto>> getAllMoments() {
-        var authUser = userService.getById(1L); //consultar si hi ha de ser o no
-        var moments = momentService.getAll(authUser);
+        var moments = momentService.getAll();
         return new ResponseEntity<>(moments, HttpStatus.OK);
     }
 

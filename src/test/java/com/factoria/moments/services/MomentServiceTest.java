@@ -5,6 +5,7 @@ import com.factoria.moments.models.Moment;
 import com.factoria.moments.models.User;
 import com.factoria.moments.repositories.IMomentRepository;
 import com.factoria.moments.services.momentS.MomentService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -20,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class MomentServiceTest {
+
+    @BeforeEach
+    // creem el momentService aquí perquè no peti o controlem el petardu
 
     @Mock
     IMomentRepository momentRepository;
