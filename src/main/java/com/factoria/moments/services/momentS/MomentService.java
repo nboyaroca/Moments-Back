@@ -76,6 +76,7 @@ public class MomentService implements IMomentService{
     public boolean deleteById(Long id, User authUser) {
         System.out.println(authUser);
         var moment= momentRepository.findById(id);
+        if (moment.isEmpty()) throw new NotFoundException("Moment doesn't exist", "M-404");
         if (moment.get().getPublisher()!=authUser) throw new BadRequestException("Only the publisher can delete his moment", "M-008");
         this.momentRepository.delete(moment.get());
         return true;

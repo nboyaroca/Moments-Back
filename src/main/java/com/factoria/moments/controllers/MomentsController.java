@@ -50,9 +50,10 @@ public class MomentsController {
     }*/
 
     // Get a moment by id AMB control d'errors
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/moments/{id}")
     ResponseEntity<MomentResponseDto> getById(@PathVariable Long id) {
-        var authUser = userService.getById(1L);
+        var authUser = authenticationFacade.getAuthUser();
         MomentResponseDto moment = momentService.findById(id, authUser);
         return new ResponseEntity<>(moment, HttpStatus.OK);
     }
@@ -68,24 +69,27 @@ public class MomentsController {
     }
 
     // Edit a moment
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/moments/{id}")
     ResponseEntity<MomentResponseDto> updateMoment(@PathVariable Long id, @RequestBody MomentRequestDto updatedMoment) {
-        var authUser = userService.getById(updatedMoment.getUserId()); //canviar per facade authenticacion method getAuthUser
+        var authUser = authenticationFacade.getAuthUser();
         MomentResponseDto moment = momentService.updateMoment(id, updatedMoment, authUser);
         return new ResponseEntity<>(moment, HttpStatus.OK);
     }
 
     // Delete a moment
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/moments/{id}")
     ResponseEntity<Boolean> deleteMoment(@PathVariable Long id) { //això és el que retorna
-        var authUser = userService.getById(1L);
+        var authUser = authenticationFacade.getAuthUser();
         var momentToDelete = this.momentService.deleteById(id, authUser);
         return new ResponseEntity<>(momentToDelete, HttpStatus.OK);
     }
-
+    // Search a moment by title or description
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping(value = "/moments", params = "search")
     ResponseEntity<List<MomentResponseDto>> getMomentSearch(@RequestParam String search) {
-        var authUser = userService.getById(1L);
+        var authUser = authenticationFacade.getAuthUser();
         var searched = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search, authUser);
         return new ResponseEntity<>(searched, HttpStatus.OK);
     }
