@@ -32,7 +32,7 @@ public class MomentMapper {
         return responseList;
     }
 
-    // Per qualsevol user
+    // For any user
     public MomentResponseDto mapMomentToMomentResponseDto(Moment moment) {
         var response = new MomentResponseDto();
         response.setId(moment.getId());
