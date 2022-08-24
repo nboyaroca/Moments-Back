@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MomentMapper {
 
-    // Per auth user
+    // For auth user
     public MomentResponseDto mapMomentToMomentResponseDto(Moment moment, User authUser) {
         var response = new MomentResponseDto();
         response.setId(moment.getId());
