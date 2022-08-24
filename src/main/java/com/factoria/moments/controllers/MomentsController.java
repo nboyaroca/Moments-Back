@@ -50,11 +50,9 @@ public class MomentsController {
     }*/
 
     // Get a moment by id AMB control d'errors
-    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/moments/{id}")
     ResponseEntity<MomentResponseDto> getById(@PathVariable Long id) {
-        var authUser = authenticationFacade.getAuthUser();
-        MomentResponseDto moment = momentService.findById(id, authUser);
+        MomentResponseDto moment = momentService.findById(id);
         return new ResponseEntity<>(moment, HttpStatus.OK);
     }
 
@@ -64,7 +62,7 @@ public class MomentsController {
     @PostMapping("/moments")
     ResponseEntity<MomentResponseDto> createMoment(@RequestBody MomentRequestDto momentRequest) {
         var authUser = authenticationFacade.getAuthUser();
-        MomentResponseDto moment = momentService.createMoment(momentRequest, authUser);
+        MomentResponseDto moment = momentService.createMoment(momentRequest, authUser.get());
         return new ResponseEntity<>(moment, HttpStatus.OK);
     }
 
@@ -73,7 +71,7 @@ public class MomentsController {
     @PutMapping("/moments/{id}")
     ResponseEntity<MomentResponseDto> updateMoment(@PathVariable Long id, @RequestBody MomentRequestDto updatedMoment) {
         var authUser = authenticationFacade.getAuthUser();
-        MomentResponseDto moment = momentService.updateMoment(id, updatedMoment, authUser);
+        MomentResponseDto moment = momentService.updateMoment(id, updatedMoment, authUser.get());
         return new ResponseEntity<>(moment, HttpStatus.OK);
     }
 
@@ -82,15 +80,16 @@ public class MomentsController {
     @DeleteMapping("/moments/{id}")
     ResponseEntity<Boolean> deleteMoment(@PathVariable Long id) { //això és el que retorna
         var authUser = authenticationFacade.getAuthUser();
-        var momentToDelete = this.momentService.deleteById(id, authUser);
+        var momentToDelete = this.momentService.deleteById(id, authUser.get());
         return new ResponseEntity<>(momentToDelete, HttpStatus.OK);
     }
+
     // Search a moment by title or description
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')") //atenció no cal tancar la ruta (autoritzar) per consultar
     @GetMapping(value = "/moments", params = "search")
     ResponseEntity<List<MomentResponseDto>> getMomentSearch(@RequestParam String search) {
-        var authUser = authenticationFacade.getAuthUser();
-        var searched = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search, authUser);
+        var authUser = authenticationFacade.getAuthUser(); //cal autenticar per saber si és propi el moment
+        var searched = momentService.findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(search, authUser.get());
         return new ResponseEntity<>(searched, HttpStatus.OK);
     }
 

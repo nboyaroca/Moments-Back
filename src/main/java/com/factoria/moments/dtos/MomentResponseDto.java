@@ -25,6 +25,6 @@ public class MomentResponseDto {
 
     public int commentsCount;
     public int likesCount;
-    private boolean isLiked;
+    private boolean isLiked = false;
 
 }

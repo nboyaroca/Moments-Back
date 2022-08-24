@@ -1,9 +1,11 @@
 package com.factoria.moments.services;
 
+import com.factoria.moments.auth.facade.IAuthenticationFacade;
 import com.factoria.moments.dtos.MomentRequestDto;
 import com.factoria.moments.models.Moment;
 import com.factoria.moments.models.User;
 import com.factoria.moments.repositories.IMomentRepository;
+import com.factoria.moments.services.momentS.IMomentService;
 import com.factoria.moments.services.momentS.MomentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,22 +24,33 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class MomentServiceTest {
 
-    @BeforeEach
-    // creem el momentService aquí perquè no peti o controlem el petardu
+    @Mock //DoubleTest (when tal retuns tal)
+    IMomentRepository momentRepository;
 
     @Mock
-    IMomentRepository momentRepository;
+    IAuthenticationFacade authenticationFacade;
+
+    private IMomentService momentService;
+
+    @BeforeEach
+    void  beforeEach() {
+        this.momentService = new MomentService(momentRepository, authenticationFacade);
+    }
+
+
+    // creem el momentService aquí perquè no peti o controlem el petardu
+
 
     @Test
     void getAllReturnsAListOfMoments() {
-        var momentService = new MomentService(momentRepository);
+
         var momentList = List.of(new Moment(), new Moment());
         var authUser = new User();
         authUser.setId(1L);
 
         Mockito.when(momentRepository.findAll()).thenReturn(momentList);
 
-        var sut = momentService.getAll(authUser);
+        var sut = momentService.getAll();
 
         assertThat(sut.size(), equalTo(2));
     }
@@ -59,14 +72,14 @@ class MomentServiceTest {
 
     @Test
     void findByIdShouldReturnAMomentWithSameParamId() {
-        var momentService = new MomentService(momentRepository);
+
         var moment = this.createMoment(); // si no tens això cal que cada vegada creis el moment i el user
         var authUser = new User();
         authUser.setId(1L);
 
         Mockito.when(momentRepository.findById(any(Long.class))).thenReturn(Optional.of(moment));
 
-        var sut = momentService.findById(1L, authUser);
+        var sut = momentService.findById(1L);
 
         assertThat(sut.getTitle(), equalTo(moment.getTitle()));
         /*assertThat(sut.getTitle(), equalTo("HelloWorld"); TEST FAIL */
@@ -74,8 +87,8 @@ class MomentServiceTest {
 
     @Test
     void createShouldSaveAMomentFromRequestDTO() {
-        var momentService = new MomentService(momentRepository);
-        var momentRequest = new MomentRequestDto("title", "description", "image", 1L);
+
+        var momentRequest = new MomentRequestDto("title", "description", "image");
         var moment = this.createMoment();
 
         Mockito.when(momentRepository.save(any(Moment.class))).thenReturn(moment);
@@ -87,8 +100,8 @@ class MomentServiceTest {
 
     @Test
     void updateMomentShouldModifyAMomentFromRequestDTO() { // mirar sempre el momentService per fer el que necessitem
-        var momentService = new MomentService(momentRepository);
-        var momentRequest = new MomentRequestDto("title", "description", "image", 1L);
+
+        var momentRequest = new MomentRequestDto("title", "description", "image");
         var moment = this.createMoment();
 
         Mockito.when(momentRepository.findById(any(Long.class))).thenReturn(Optional.of(moment));
@@ -103,8 +116,8 @@ class MomentServiceTest {
     // UNHAPPY PATH no funciona, hauria de ser null i en canvi dóna moment.// ara ni funciona!!!!
     @Test
     void UserCanNotUpdateAMomentIfItsNotTheirs() {
-        var momentService = new MomentService(momentRepository);
-        var momentRequest = new MomentRequestDto("title", "description", "image", 1L);
+
+        var momentRequest = new MomentRequestDto("title", "description", "image");
         Long momentId = 1L;
         Moment moment = this.createMoment();
 
@@ -112,16 +125,16 @@ class MomentServiceTest {
         user.setId(2L);
 
         Mockito.when(momentRepository.findById(any(Long.class))).thenReturn(Optional.of(moment));
-        Mockito.when(momentRepository.save(any(Moment.class))).thenReturn(moment);
+//        Mockito.when(momentRepository.save(any(Moment.class))).thenReturn(moment); no cal perquè no hem de poder-ho fer
 
         var sut = momentService.updateMoment(momentId, momentRequest, user);
 
-        assertThat(sut, equalTo(moment));
+        assertThat(sut, equalTo(null)); // cal testejar una excepción, no un null
     }
 
     @Test
     void deleteByIdShouldDeleteAMomentById() {
-        var momentService = new MomentService(momentRepository);
+
         var moment = this.createMoment();
         var user = new User();
         user.setId(1L);
@@ -132,11 +145,13 @@ class MomentServiceTest {
 
         assertThat(sut, equalTo(true));
         /*assertThat(sut, equalTo(false)); FAILED TEST */
+
+        //no funciona el test perquè cal testejar excepcions
     }
 
     @Test
     void userCanNotDeleteAMomentIfItsNotTheirs() {
-        var momentService = new MomentService(momentRepository);
+
         Moment moment = this.createMoment();
         Long delId = 1L;
 
@@ -153,7 +168,7 @@ class MomentServiceTest {
 
     @Test
     void findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCaseShouldReturnSearchedMoments() {
-        var momentService = new MomentService(momentRepository);
+
         var moment = this.createMoment();
         var momentList= List.of(moment, moment);
         var authUser = new User();

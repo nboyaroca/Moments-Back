@@ -18,7 +18,7 @@ public interface IMomentService {
 
     List<MomentResponseDto> getAll();
 
-    MomentResponseDto findById(Long id, User authUser);
+    MomentResponseDto findById(Long id);
 
     MomentResponseDto createMoment(MomentRequestDto momentDto, User authUser);
 
@@ -27,4 +27,6 @@ public interface IMomentService {
     boolean deleteById(Long id, User authUser);
 
     List<MomentResponseDto> findByTitleContainsIgnoreCaseOrDescriptionContainsIgnoreCase(String search, User authUser);
+
+    boolean deleteByUser(Long delId, User auth);
 }

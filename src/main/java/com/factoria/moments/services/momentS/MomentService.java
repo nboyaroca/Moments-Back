@@ -30,7 +30,9 @@ public class MomentService implements IMomentService{
 
     @Override
     public List<MomentResponseDto> getAll() {
-       return new MomentMapper().mapMultipleMomentsToListResponse(momentRepository.findAll(), this.authenticationFacade.getAuthUser());
+        var authUser = authenticationFacade.getAuthUser();
+        if(authUser.isEmpty()) return new MomentMapper().mapMultipleMomentsToListResponse(momentRepository.findAll());
+       return new MomentMapper().mapMultipleMomentsToListResponse(momentRepository.findAll(), authUser.get());
     } // la funció getAll() ens torna el findAll() del repository
 
 
@@ -43,12 +45,11 @@ public class MomentService implements IMomentService{
 
     // Servei findById AMB control d'errors
     @Override
-    public MomentResponseDto findById(Long id, User authUser) {
+    public MomentResponseDto findById(Long id) {
         var opMoment = momentRepository.findById(id);
         if (opMoment.isEmpty()) throw new NotFoundException("Moment Not Found", "M-150");
-        MomentResponseDto responseMoment = new MomentMapper().mapMomentToMomentResponseDto(opMoment.get(), authUser);
+        MomentResponseDto responseMoment = new MomentMapper().mapMomentToMomentResponseDto(opMoment.get(), this.authenticationFacade.getAuthUser().get()); // atenció no hem combrobat si tenim aquest usuari i el findById no el teni tanat
         return responseMoment;
-
     }
 
     @Override

@@ -48,11 +48,11 @@ public class LikeService implements ILikeService{
         var moment = momentService.getWholeMoment(likeRequest.getMomentId());
         var liker = authenticationFacade.getAuthUser();
         // si el publisher del moment no és el mateix que el liker, llença un error
-        if (moment.getPublisher()==liker) throw new BadRequestException("Publisher can't like his own moment", "M-420");
+        if (moment.getPublisher()==liker.get()) throw new BadRequestException("Publisher can't like his own moment", "M-420");
         // defineixo el like
         var like = new Like();
         like.setMoment(moment);
-        like.setLiker(liker);
+        like.setLiker(liker.get());
 
         var checkedLike = this.checkIfLikeAlreadyExists(like);
         if (checkedLike.isPresent()){
