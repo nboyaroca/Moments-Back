@@ -21,7 +21,7 @@ public class User {
     private String email;
     @JsonIgnore
     private String password;
-    public User(String name) {
+    public User (String name) {
         this.username = name;
     }
 
@@ -34,9 +34,10 @@ public class User {
         this.id = id;
     }
 
-    public User(String username, String email, String encode) {
+    public User(String username, String email, String avatar, String encode) {
         this.username = username;
         this.email = email;
+        this.avatar = avatar;
         this.password = encode;
     }
 

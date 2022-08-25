@@ -3,6 +3,7 @@ package com.factoria.moments.auth.controller;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collections;
 import java.util.Set;
 
 public class SignupRequest {
@@ -21,6 +22,8 @@ public class SignupRequest {
     @Size(min = 6, max = 40)
     private String password;
 
+    private String avatar;
+
 
     public String getUsername() {
         return username;
@@ -38,6 +41,10 @@ public class SignupRequest {
         this.email = email;
     }
 
+    public String getAvatar() { return avatar; }
+
+    public void setAvatar(String avatar) { this.avatar = avatar; }
+
     public String getPassword() {
         return password;
     }
@@ -53,4 +60,6 @@ public class SignupRequest {
     public void setRole(Set<String> role) {
         this.role = role;
     }
+
+
 }

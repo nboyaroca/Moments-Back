@@ -54,25 +54,25 @@ INTO
   comments
   (comment, moment_id, publisher_id)
 VALUES
-  ('City of LOVE', 6, 1);
+  ('City of LOVE', 7, 3);
 INSERT
 INTO
   comments
   (comment, moment_id, publisher_id)
 VALUES
-  ('Athens is considered Democracy''s birthplace', 8, 1);
+  ('Athens is considered Democracy''s birthplace', 9, 3);
 INSERT
 INTO
   comments
   (comment, moment_id, publisher_id)
 VALUES
-  ('The gods chose the best site for their Olympus', 8, 1);
+  ('The gods chose the best site for their Olympus', 9, 2);
 INSERT
 INTO
   comments
   (comment, moment_id, publisher_id)
 VALUES
-  ('God save the queen, officially used in Commonwealth Countries', 1, 1);
+  ('God save the queen, officially used in Commonwealth Countries', 2, 3);
 
 
 INSERT

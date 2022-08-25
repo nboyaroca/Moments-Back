@@ -34,14 +34,14 @@ public class SeedDataService { //quan s'engega l'aplicació s'injecta el seed
         Set<Role> userRoles = Set.of(roleRepository.findByName(Role.RoleName.ROLE_USER).get());
 
         var jamesBond = new User();
-        jamesBond.setRoles(roleRepository.findAll().stream().collect(Collectors.toSet()));
+        jamesBond.setRoles(userRoles);
         jamesBond.setEmail("jbond@gmail.com");
         jamesBond.setUsername("James Bond");
         jamesBond.setPassword(encoder.encode("12345678"));
         jamesBond.setAvatar("https://e3.365dm.com/16/07/2048x1152/evs-xtaccess-2012-10-05-cam-c-06h41m42s20-1_3646884.jpg");
 
         var traveller = new User();
-        traveller.setRoles(roleRepository.findAll().stream().collect(Collectors.toSet()));
+        traveller.setRoles(userRoles);
         traveller.setEmail("traveller@gmail.com");
         traveller.setUsername("Traveller");
         traveller.setPassword(encoder.encode("12345678"));
@@ -58,9 +58,9 @@ public class SeedDataService { //quan s'engega l'aplicació s'injecta el seed
         var user = userRepository.findById(1L).get();
         var moment = new Moment();
         moment.setPublisher(user);
-        moment.setTitle("testMoment");
-        moment.setDescription("testDescription");
-        moment.setImgUrl("img.jpg");
+        moment.setTitle("City Moments");
+        moment.setDescription("Share your favourites city moments");
+        moment.setImgUrl("https://www.researchgate.net/publication/273900078/figure/fig13/AS:294653078327321@1447262176739/Vertical-view-of-the-circle-in-1958-with-a-west-side-very-different-from-the-1930s-Mxim.png");
         momentRepository.save(moment);
     }
 }

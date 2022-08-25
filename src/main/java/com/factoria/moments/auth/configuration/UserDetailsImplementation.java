@@ -20,16 +20,19 @@ public class UserDetailsImplementation implements UserDetails {
 
     private String email;
 
+    private String avatar;
+
     @JsonIgnore
     private String password;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImplementation(Long id, String username, String email, String password,
+    public UserDetailsImplementation(Long id, String username, String email,String avatar, String password,
                                      Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
+        this.avatar = avatar;
         this.password = password;
         this.authorities = authorities;
     }
@@ -43,6 +46,7 @@ public class UserDetailsImplementation implements UserDetails {
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
+                user.getAvatar(),
                 user.getPassword(),
                 authorities);
     }
@@ -69,6 +73,8 @@ public class UserDetailsImplementation implements UserDetails {
     public String getUsername() {
         return username;
     }
+
+    public Object getAvatar() { return avatar; }
 
     @Override
     public boolean isAccountNonExpired() {
@@ -99,4 +105,6 @@ public class UserDetailsImplementation implements UserDetails {
         UserDetailsImplementation user = (UserDetailsImplementation) o;
         return Objects.equals(id, user.id);
     }
+
+
 }
