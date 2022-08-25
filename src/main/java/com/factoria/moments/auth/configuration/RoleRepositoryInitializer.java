@@ -49,6 +49,7 @@ public class RoleRepositoryInitializer {
         user.setEmail("admin@admin.com");
         user.setUsername("Admin");
         user.setPassword(encoder.encode("12345678"));
+        user.setAvatar("https://cdn4.iconfinder.com/data/icons/profession-avatar-5/64/13-astronaut-512.png");
 
         authRepository.save(user);
     }

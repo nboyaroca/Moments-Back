@@ -1,19 +1,6 @@
 
 INSERT
 INTO
-  users
-  (id, username, avatar, email, password)
-VALUES
-  (NEXTVAL('hibernate_sequence'), 'James Bond', 'https://e3.365dm.com/16/07/2048x1152/evs-xtaccess-2012-10-05-cam-c-06h41m42s20-1_3646884.jpg', 'jbond@gmail.com', '12345678');
-INSERT
-INTO
-  users
-  (id, username, avatar, email, password)
-VALUES
-  (NEXTVAL('hibernate_sequence'), 'Traveller', 'https://www.blog.motifphotos.com/wp-content/uploads/2018/12/iStock-902506410_1200x800px-1200x800.jpg', 'traveller@gmail.com', '12345678');
-
-
-INSERT INTO
   moments
   (title, description, img_Url, publisher_id)
 VALUES

@@ -48,6 +48,7 @@ public class MomentService implements IMomentService{
     public MomentResponseDto findById(Long id) {
         var opMoment = momentRepository.findById(id);
         if (opMoment.isEmpty()) throw new NotFoundException("Moment Not Found", "M-150");
+        if (this.authenticationFacade.getAuthUser().isEmpty()) return new MomentMapper().mapMomentToMomentResponseDto(opMoment.get());
         MomentResponseDto responseMoment = new MomentMapper().mapMomentToMomentResponseDto(opMoment.get(), this.authenticationFacade.getAuthUser().get()); // atenció no hem combrobat si tenim aquest usuari i el findById no el teni tanat
         return responseMoment;
     }
